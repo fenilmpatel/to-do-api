@@ -27,5 +27,22 @@ describe('POST/todos',()=>{
                 expect(todos[0].text).toBe(text);
                 done()
             }).catch((e)=>done(e))  });
+
         });
-    });
+
+            it('shoul be not created a new todo ',(done)=>{
+                request(app)
+                .post('/todos')
+                .send({})
+                .expect(400)
+                .end((e,res)=>{
+                    if(e){return done(e)}
+                todo.find().then((todos)=>{
+                    expect(todos.length).toBe(0);
+                    done();
+                }).catch((e)=>done(e));
+                })
+            });
+    
+        });
+    
